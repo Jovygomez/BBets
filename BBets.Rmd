@@ -1,5 +1,6 @@
 ---
-title: "Untitled"
+title: "BBets"
+author: "Jovygomez"
 output: html_document
 date: "2024-09-27"
 ---
@@ -13,3 +14,151 @@ Find the probability thatat least two student have the same birthday.  If 26 stu
 2. Assume class size is 26 instead of 35.  With the same bet ($1 ot $1) what is the probability Dr. J wins the bet now.  If 20 of the 26 students make the bet, what is Dr. J's expected profit/loss?
 
 3. What size class (how many students) makes the $1 againt $1 a fair bet?
+
+Question 1: Answer  Below 
+
+
+```{r, echo=TRUE}
+# Set seed for reproducibility
+set.seed(123)
+
+
+# Function to simulate one birthday experiment
+birthday_simulation <- function(class_size) {
+  birthdays <- sample(1:365, class_size, replace = TRUE)
+  return(any(duplicated(birthdays)))
+}
+
+# Initialize parameters
+class_size <- 35
+num_simulations <- 100
+probabilities <- numeric(num_simulations)
+
+# Run simulations
+for (i in 1:num_simulations) {
+  success_count <- sum(replicate(1000, birthday_simulation(class_size)))
+  probabilities[i] <- success_count / 1000
+}
+
+# Plot the histogram of probabilities
+hist(probabilities, main = "Histogram of Probabilities (Birthday Problem)", 
+     xlab = "Probability", col = "lightblue", border = "black")
+
+# Calculate mean of the probabilities
+mean_prob <- mean(probabilities)
+cat("Mean =", mean_prob, "\n")
+
+# Calculate 95% confidence interval
+conf_interval <- quantile(probabilities, c(0.025, 0.975))
+cat("95% Confidence Interval =", conf_interval, "\n")
+```
+
+```{r}
+EV= mean_prob*26-(1-mean_prob)*26
+print(paste("ev=",EV))
+```
+
+```{r}
+FAIR=(mean_prob)/(1-mean_prob)
+print(paste("fairbet=",FAIR))
+```
+
+Find the probability that at least two student have the same birthday.  If 26 students in the class take the bet how much is Dr. J expected to win/lose. 
+-He is expected to win
+
+How much should Dr. J wager against the student's $1 to make this a fair bet?
+
+-Dr. J would have to bet 4.6 dollars for it to be a fair bet. 
+
+##Question 2
+```{r, echo=TRUE}
+# Set seed for reproducibility
+set.seed(123)
+
+
+# Function to simulate one birthday experiment
+birthday_simulation <- function(class_size) {
+  birthdays <- sample(1:365, class_size, replace = TRUE)
+  return(any(duplicated(birthdays)))
+}
+
+# Initialize parameters
+class_size <- 26
+num_simulations <- 100
+probabilities <- numeric(num_simulations)
+
+# Run simulations
+for (i in 1:num_simulations) {
+  success_count <- sum(replicate(1000, birthday_simulation(class_size)))
+  probabilities[i] <- success_count / 1000
+}
+
+# Plot the histogram of probabilities
+hist(probabilities, main = "Histogram of Probabilities (Birthday Problem)", 
+     xlab = "Probability", col = "lightblue", border = "black")
+
+# Calculate mean of the probabilities
+mean_prob <- mean(probabilities)
+cat("Mean =", mean_prob, "\n")
+
+# Calculate 95% confidence interval
+conf_interval <- quantile(probabilities, c(0.025, 0.975))
+cat("95% Confidence Interval =", conf_interval, "\n")
+```
+
+```{r}
+EV= mean_prob*20-(1-mean_prob)*20
+print(paste("ev=",EV))
+```
+
+```{r}
+FAIR=(mean_prob)/(1-mean_prob)
+print(paste("fairbet=",FAIR))
+```
+
+Assume class size is 26 instead of 35. With the same bet ($1 to $1) what is the probability that Dr. J wins now? 
+If 20 of the 26 students make the bet, what is Dr. J expected profit/loss? 
+
+##Question 3
+
+```{r, echo=TRUE}
+# Set seed for reproducibility
+set.seed(123)
+
+
+# Function to simulate one birthday experiment
+birthday_simulation <- function(class_size) {
+  birthdays <- sample(1:365, class_size, replace = TRUE)
+  return(any(duplicated(birthdays)))
+}
+
+# Initialize parameters
+class_size <- 23
+num_simulations <- 100
+probabilities <- numeric(num_simulations)
+
+# Run simulations
+for (i in 1:num_simulations) {
+  success_count <- sum(replicate(1000, birthday_simulation(class_size)))
+  probabilities[i] <- success_count / 1000
+}
+
+# Plot the histogram of probabilities
+hist(probabilities, main = "Histogram of Probabilities (Birthday Problem)", 
+     xlab = "Probability", col = "lightblue", border = "black")
+
+# Calculate mean of the probabilities
+mean_prob <- mean(probabilities)
+cat("Mean =", mean_prob, "\n")
+
+# Calculate 95% confidence interval
+conf_interval <- quantile(probabilities, c(0.025, 0.975))
+cat("95% Confidence Interval =", conf_interval, "\n")
+```
+
+```{r}
+EV= mean_prob*20-(1-mean_prob)*20
+print(paste("ev=",EV))
+```
+
+In order for it to be a Fair bet the class would need to have 23 students.
